@@ -1,16 +1,35 @@
 # mirror_wall
 
-A new Flutter project.
+## Introduction
+The Mirror Wall App is a versatile browser application designed to enhance your web
+browsing experience with intuitive navigation buttons, multiple search engine 
+options, and essential connectivity features. This documentation provides 
+detailed information on the app's features and usage.
 
-## Getting Started
+## Features
+Home Button
+The Home button allows users to quickly return to the app's default home page. It
+is typically located in the top navigation bar.
 
-This project is a starting point for a Flutter application.
+## Bookmark Button
+The Bookmark button enables users to save their favorite web pages for easy access
+later. Clicking this button will save the current page to the bookmarks list.
 
-A few resources to get you started if this is your first Flutter project:
+## Next Button
+The Next button allows users to navigate forward through their browsing history.
+It becomes active when there is a forward page to go to.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Back Button
+The Back button lets users navigate backward through their browsing history. It 
+is useful for returning to previously visited pages.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Search Engine Option
+The app provides an option to choose between different search engines for web searches.
+The available search engines are:
+
+Google (Default)
+Bing
+DuckDuckGo
+Yahoo
+
+Users can select their preferred search engine from the popupMenu menu.

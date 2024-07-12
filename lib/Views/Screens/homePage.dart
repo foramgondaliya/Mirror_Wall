@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:mirror_wall/Modal/bookmark.dart';
 import 'package:mirror_wall/Provider/connectivity_Provider.dart';
+import 'package:mirror_wall/Provider/SearchEngineProvider.dart';
 import 'package:provider/provider.dart';
 
 class homePage extends StatefulWidget {
@@ -58,7 +60,9 @@ class _homePageState extends State<homePage> {
             itemBuilder: (context) {
               return <PopupMenuEntry>[
                 PopupMenuItem(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('bookmark');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -191,7 +195,12 @@ class _homePageState extends State<homePage> {
                         Icons.bookmark_border,
                         size: 30,
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        WebUri? txt = await inAppWebViewController!.getUrl();
+                        Bookmark.urls.add(txt.toString());
+                        Bookmark.convertUrl();
+                        print(Bookmark.urls.length.toString());
+                      },
                     ),
                     IconButton(
                       icon: Icon(
@@ -247,14 +256,47 @@ class AlertBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        "Search Engine",
-        style: TextStyle(fontWeight: FontWeight.w500),
-      ),
-      content: Container(
-        height: 400,
-        width: 300,
-      ),
+      title: const Text('Search Engine'),
+      content: Consumer<SearchEngineProvider>(
+          builder: (BuildContext context, SearchEngineProvider value, _) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RadioListTile<String>(
+              title: Text('Google'),
+              value: value.strGoogle,
+              groupValue: value.selectedRadio,
+              onChanged: (val) {
+                value.handleRadioValueChange(val!, context);
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Yahoo'),
+              value: value.strYahoo,
+              groupValue: value.selectedRadio,
+              onChanged: (val) {
+                value.handleRadioValueChange(val!, context);
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Bing'),
+              value: value.strBing,
+              groupValue: value.selectedRadio,
+              onChanged: (val) {
+                value.handleRadioValueChange(val!, context);
+              },
+            ),
+            RadioListTile<String>(
+              title: Text('Duck Duck Go'),
+              value: value.strDuckDuckGo,
+              groupValue: value.selectedRadio,
+              onChanged: (val) {
+                value.handleRadioValueChange(val!, context);
+              },
+            )
+          ],
+        );
+      }),
     );
   }
 }
