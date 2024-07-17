@@ -68,13 +68,20 @@ class _bookmarkState extends State<bookmark> {
                               SizedBox(
                                 width: 10,
                               ),
-                              SizedBox(
-                                width: 320,
-                                child: Text(
-                                  "${Bookmark.urlData[index].toString()}",
-                                  style: TextStyle(fontSize: 20),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('mark',
+                                      arguments:
+                                          Bookmark.urlData[index].toString());
+                                },
+                                child: SizedBox(
+                                  width: 320,
+                                  child: Text(
+                                    "${Bookmark.urlData[index].toString()}",
+                                    style: TextStyle(fontSize: 20),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
                               IconButton(

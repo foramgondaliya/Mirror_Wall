@@ -184,41 +184,6 @@ class _homePageState extends State<homePage> {
                       },
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 30,
-                    ),
-                    onPressed: () async {
-                      String url = searchController.text;
-                      if (!url.startsWith('http')) {
-                        switch (Provider.of<SearchEngineProvider>(context,
-                                listen: false)
-                            .selectedSearchEngine) {
-                          case 'Yahoo':
-                            url = 'https://search.yahoo.com/search?p=' + url;
-                            break;
-                          case 'Bing':
-                            url = 'https://www.bing.com/search?q=' + url;
-                            break;
-                          case 'Duck Duck Go':
-                            url = 'https://duckduckgo.com/?q=' + url;
-                            break;
-                          case 'Google':
-                          default:
-                            url = 'https://www.google.com/search?q=' + url;
-                            break;
-                        }
-                      }
-                      if (inAppWebViewController != null) {
-                        await inAppWebViewController!.loadUrl(
-                          urlRequest: URLRequest(
-                            url: WebUri(url),
-                          ),
-                        );
-                      }
-                    },
-                  ),
                 ],
               ),
             ),

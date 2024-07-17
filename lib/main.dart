@@ -4,6 +4,7 @@ import 'package:mirror_wall/Provider/connectivity_Provider.dart';
 import 'package:mirror_wall/Provider/SearchEngineProvider.dart';
 import 'package:mirror_wall/Views/Screens/bookmark.dart';
 import 'package:mirror_wall/Views/Screens/homePage.dart';
+import 'package:mirror_wall/Views/Screens/mark.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -22,6 +23,7 @@ void main() {
     child: MaterialApp(debugShowCheckedModeBanner: false, routes: {
       '/': (context) => homePage(),
       'bookmark': (context) => bookmark(),
+      'mark': (context) => mark(),
     }),
   ));
 }
