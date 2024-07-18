@@ -85,13 +85,14 @@ class _bookmarkState extends State<bookmark> {
                                 ),
                               ),
                               IconButton(
-                                  onPressed: () {
-                                    value.delete(index);
-                                  },
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.grey.shade700,
-                                  ))
+                                onPressed: () {
+                                  value.delete(index);
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
                             ],
                           ),
                         ),
