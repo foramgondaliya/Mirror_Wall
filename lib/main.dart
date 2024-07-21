@@ -22,7 +22,7 @@ void main() {
     ],
     child: MaterialApp(debugShowCheckedModeBanner: false, routes: {
       '/': (context) => homePage(),
-      'bookmark': (context) => bookmark(),
+      'bookmark': (context) => BookmarkPage(),
       'mark': (context) => mark(),
     }),
   ));

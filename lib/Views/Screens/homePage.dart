@@ -72,37 +72,36 @@ class _homePageState extends State<homePage> {
           ),
           centerTitle: true,
           actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('bookmark');
+                },
+                icon: Icon(Icons.bookmark)),
             PopupMenuButton(
+              onSelected: (val) {
+                inAppWebViewController?.loadUrl(
+                  urlRequest: URLRequest(
+                    url: WebUri("$val"),
+                  ),
+                );
+              },
               itemBuilder: (context) {
                 return <PopupMenuEntry>[
                   PopupMenuItem(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('bookmark');
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.bookmark),
-                        Text("All Bookmarks"),
-                      ],
-                    ),
+                    child: Text("Google"),
+                    value: "https://www.google.com",
                   ),
                   PopupMenuItem(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const AlertBox();
-                        },
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.screen_search_desktop_outlined),
-                        Text("Search Engine"),
-                      ],
-                    ),
+                    child: Text("Yahoo"),
+                    value: "https://www.yahoo.com",
+                  ),
+                  PopupMenuItem(
+                    child: Text("Bing"),
+                    value: "https://www.bing.com",
+                  ),
+                  PopupMenuItem(
+                    child: Text("DuckDuckGo"),
+                    value: "https://www.duckduckgo.com",
                   ),
                 ];
               },
@@ -280,58 +279,58 @@ class _homePageState extends State<homePage> {
   }
 }
 
-class AlertBox extends StatelessWidget {
-  const AlertBox({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<SearchEngineProvider>(
-      builder: (context, searchEngineProvider, child) {
-        return AlertDialog(
-          title: const Text('Search Engine'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RadioListTile<String>(
-                title: Text('Google'),
-                value: 'Google',
-                groupValue: searchEngineProvider.selectedSearchEngine,
-                onChanged: (val) {
-                  searchEngineProvider.setSearchEngine(val!);
-                  Navigator.of(context).pop();
-                },
-              ),
-              RadioListTile<String>(
-                title: Text('Yahoo'),
-                value: 'Yahoo',
-                groupValue: searchEngineProvider.selectedSearchEngine,
-                onChanged: (val) {
-                  searchEngineProvider.setSearchEngine(val!);
-                  Navigator.of(context).pop();
-                },
-              ),
-              RadioListTile<String>(
-                title: Text('Bing'),
-                value: 'Bing',
-                groupValue: searchEngineProvider.selectedSearchEngine,
-                onChanged: (val) {
-                  searchEngineProvider.setSearchEngine(val!);
-                  Navigator.of(context).pop();
-                },
-              ),
-              RadioListTile<String>(
-                title: Text('Duck Duck Go'),
-                value: 'Duck Duck Go',
-                groupValue: searchEngineProvider.selectedSearchEngine,
-                onChanged: (val) {
-                  searchEngineProvider.setSearchEngine(val!);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+// class AlertBox extends StatelessWidget {
+//   const AlertBox({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<SearchEngineProvider>(
+//       builder: (context, searchEngineProvider, child) {
+//         return AlertDialog(
+//           title: const Text('Search Engine'),
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               RadioListTile<String>(
+//                 title: Text('Google'),
+//                 value: "https://www.google.com",
+//                 groupValue: searchEngineProvider.selectedSearchEngine,
+//                 onChanged: (val) {
+//                   searchEngineProvider.setSearchEngine(val!);
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//               RadioListTile<String>(
+//                 title: Text('Yahoo'),
+//                 value: "https://www.yahoo.com",
+//                 groupValue: searchEngineProvider.selectedSearchEngine,
+//                 onChanged: (val) {
+//                   searchEngineProvider.setSearchEngine(val!);
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//               RadioListTile<String>(
+//                 title: Text('Bing'),
+//                 value: "https://www.bing.com",
+//                 groupValue: searchEngineProvider.selectedSearchEngine,
+//                 onChanged: (val) {
+//                   searchEngineProvider.setSearchEngine(val!);
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//               RadioListTile<String>(
+//                 title: Text('Duck Duck Go'),
+//                 value: "https://www.duckduckgo.com",
+//                 groupValue: searchEngineProvider.selectedSearchEngine,
+//                 onChanged: (val) {
+//                   searchEngineProvider.setSearchEngine(val!);
+//                   Navigator.of(context).pop();
+//                 },
+//               ),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
