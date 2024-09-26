@@ -18,6 +18,9 @@ class _homePageState extends State<homePage> {
   InAppWebViewController? inAppWebViewController;
   TextEditingController searchController = TextEditingController();
   bool isBookmarked = false;
+  bool isTapped = false;
+  bool canGoBack = false;
+  bool canGoForward = false;
 
   @override
   void initState() {
@@ -42,6 +45,17 @@ class _homePageState extends State<homePage> {
         }
       },
     );
+  }
+
+  void updateButton() async {
+    if (inAppWebViewController != null) {
+      bool back = await inAppWebViewController!.canGoBack();
+      bool forward = await inAppWebViewController!.canGoForward();
+      setState(() {
+        canGoBack = back;
+        canGoForward = forward;
+      });
+    }
   }
 
   void checkIfBookmarked() async {
@@ -122,10 +136,12 @@ class _homePageState extends State<homePage> {
                       onLoadStart: (controller, url) {
                         inAppWebViewController = controller;
                         checkIfBookmarked();
+                        updateButton();
                       },
                       onLoadStop: (controller, url) async {
                         await pullToRefreshController!.endRefreshing();
                         checkIfBookmarked();
+                        updateButton();
                       },
                     );
                   } else {
@@ -151,26 +167,6 @@ class _homePageState extends State<homePage> {
                           ),
                           onSubmitted: (value) async {
                             String url = value;
-                            if (!url.startsWith('http')) {
-                              switch (
-                                  searchEngineProvider.selectedSearchEngine) {
-                                case 'Yahoo':
-                                  url = 'https://search.yahoo.com/search?p=' +
-                                      url;
-                                  break;
-                                case 'Bing':
-                                  url = 'https://www.bing.com/search?q=' + url;
-                                  break;
-                                case 'Duck Duck Go':
-                                  url = 'https://duckduckgo.com/?q=' + url;
-                                  break;
-                                case 'Google':
-                                default:
-                                  url =
-                                      'https://www.google.com/search?q=' + url;
-                                  break;
-                              }
-                            }
                             if (inAppWebViewController != null) {
                               await inAppWebViewController!.loadUrl(
                                 urlRequest: URLRequest(
@@ -231,17 +227,18 @@ class _homePageState extends State<homePage> {
                         },
                       ),
                       IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          size: 30,
-                        ),
-                        onPressed: () async {
-                          if (inAppWebViewController != null) {
-                            if (await inAppWebViewController!.canGoBack()) {
-                              await inAppWebViewController!.goBack();
-                            }
-                          }
-                        },
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: canGoBack
+                            ? () async {
+                                if (inAppWebViewController != null) {
+                                  if (await inAppWebViewController!
+                                      .canGoBack()) {
+                                    await inAppWebViewController!.goBack();
+                                    updateButton();
+                                  }
+                                }
+                              }
+                            : null,
                       ),
                       IconButton(
                         icon: Icon(
@@ -255,17 +252,18 @@ class _homePageState extends State<homePage> {
                         },
                       ),
                       IconButton(
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 30,
-                        ),
-                        onPressed: () async {
-                          if (inAppWebViewController != null) {
-                            if (await inAppWebViewController!.canGoForward()) {
-                              await inAppWebViewController!.goForward();
-                            }
-                          }
-                        },
+                        icon: Icon(Icons.arrow_forward),
+                        onPressed: canGoForward
+                            ? () async {
+                                if (inAppWebViewController != null) {
+                                  if (await inAppWebViewController!
+                                      .canGoForward()) {
+                                    await inAppWebViewController!.goForward();
+                                    updateButton();
+                                  }
+                                }
+                              }
+                            : null,
                       ),
                     ],
                   ),
@@ -278,59 +276,3 @@ class _homePageState extends State<homePage> {
     );
   }
 }
-
-// class AlertBox extends StatelessWidget {
-//   const AlertBox({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<SearchEngineProvider>(
-//       builder: (context, searchEngineProvider, child) {
-//         return AlertDialog(
-//           title: const Text('Search Engine'),
-//           content: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               RadioListTile<String>(
-//                 title: Text('Google'),
-//                 value: "https://www.google.com",
-//                 groupValue: searchEngineProvider.selectedSearchEngine,
-//                 onChanged: (val) {
-//                   searchEngineProvider.setSearchEngine(val!);
-//                   Navigator.of(context).pop();
-//                 },
-//               ),
-//               RadioListTile<String>(
-//                 title: Text('Yahoo'),
-//                 value: "https://www.yahoo.com",
-//                 groupValue: searchEngineProvider.selectedSearchEngine,
-//                 onChanged: (val) {
-//                   searchEngineProvider.setSearchEngine(val!);
-//                   Navigator.of(context).pop();
-//                 },
-//               ),
-//               RadioListTile<String>(
-//                 title: Text('Bing'),
-//                 value: "https://www.bing.com",
-//                 groupValue: searchEngineProvider.selectedSearchEngine,
-//                 onChanged: (val) {
-//                   searchEngineProvider.setSearchEngine(val!);
-//                   Navigator.of(context).pop();
-//                 },
-//               ),
-//               RadioListTile<String>(
-//                 title: Text('Duck Duck Go'),
-//                 value: "https://www.duckduckgo.com",
-//                 groupValue: searchEngineProvider.selectedSearchEngine,
-//                 onChanged: (val) {
-//                   searchEngineProvider.setSearchEngine(val!);
-//                   Navigator.of(context).pop();
-//                 },
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
