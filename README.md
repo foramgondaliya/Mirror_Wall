@@ -39,5 +39,5 @@ Users can select their preferred search engine from the popupMenu menu.
 ![Screenshot_20240926_183734](https://github.com/user-attachments/assets/811f806a-56ae-4e89-9ef7-eb7d4d21f981)
 
 ![Screenshot_20240712_121317](https://github.com/user-attachments/assets/b96fedc6-480f-48be-b7ad-dd2f310ed675)
-![Screenshot_20240712_121224](https://github.com/user-attachments/assets/e1844052-e5e2-49c3-a624-04baac362f52)
+
 
